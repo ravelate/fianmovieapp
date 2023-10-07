@@ -5,18 +5,17 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.GridLayoutManager
 import com.felina.moviefianapp.R
 import com.felina.moviefianapp.core.data.Resource
 import com.felina.moviefianapp.core.ui.MovieAdapter
-import com.felina.moviefianapp.core.ui.ViewModelFactory
 import com.felina.moviefianapp.databinding.FragmentHomeBinding
+import org.koin.android.viewmodel.ext.android.viewModel
 
 class HomeFragment : Fragment() {
 
     private var _binding: FragmentHomeBinding? = null
-    private lateinit var viewModel: HomeViewModel
+    private val homeViewModel: HomeViewModel by viewModel()
     private val binding get() = _binding!!
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -30,9 +29,9 @@ class HomeFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         val movieAdapter = MovieAdapter()
-        val factory = ViewModelFactory.getInstance(requireActivity())
-        viewModel = ViewModelProvider(this, factory)[HomeViewModel::class.java]
-        viewModel.movie.observe(viewLifecycleOwner, { tourism ->
+//        val factory = ViewModelFactory.getInstance(requireActivity())
+//        viewModel = ViewModelProvider(this, factory)[HomeViewModel::class.java]
+        homeViewModel.movie.observe(viewLifecycleOwner, { tourism ->
             if (tourism != null) {
                 when (tourism) {
                     is Resource.Loading -> binding.progressBar.visibility = View.VISIBLE
