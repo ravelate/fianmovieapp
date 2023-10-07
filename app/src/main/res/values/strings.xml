@@ -1,3 +1,15 @@
 <resources>
     <string name="app_name">Movie Fian App</string>
+    <string name="image_description">Image</string>
+    <string name="text_primary">Sample of title text</string>
+    <string name="text_subtitle">Sample of subtitle text</string>
+    <string name="text_release">Release Date: %1\$s</string>
+    <string name="text_rating">%1\$f / 10</string>
+
+
+    <string name="menu_home">Home</string>
+
+    <string name="title_activity_detail_home">DetailHomeActivity</string>
+    <string name="no_data">Empty data</string>
+    <string name="something_wrong">Oops.. something went wrong</string>
 </resources>
