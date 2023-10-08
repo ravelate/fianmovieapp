@@ -1,4 +1,4 @@
-package com.felina.moviefianapp.feature
+package com.felina.moviefianapp.feature.home
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.asLiveData

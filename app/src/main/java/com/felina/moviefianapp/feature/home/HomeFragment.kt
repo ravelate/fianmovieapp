@@ -1,4 +1,4 @@
-package com.felina.moviefianapp.feature
+package com.felina.moviefianapp.feature.home
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -29,16 +29,15 @@ class HomeFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         val movieAdapter = MovieAdapter()
-//        val factory = ViewModelFactory.getInstance(requireActivity())
-//        viewModel = ViewModelProvider(this, factory)[HomeViewModel::class.java]
-        homeViewModel.movie.observe(viewLifecycleOwner, { tourism ->
-            if (tourism != null) {
-                when (tourism) {
+        homeViewModel.movie.observe(viewLifecycleOwner) { movie ->
+            if (movie != null) {
+                when (movie) {
                     is Resource.Loading -> binding.progressBar.visibility = View.VISIBLE
                     is Resource.Success -> {
                         binding.progressBar.visibility = View.GONE
-                        movieAdapter.setData(tourism.data)
+                        movieAdapter.setData(movie.data)
                     }
+
                     is Resource.Error -> {
                         binding.progressBar.visibility = View.GONE
                         binding.viewError.root.visibility = View.VISIBLE
@@ -46,7 +45,7 @@ class HomeFragment : Fragment() {
                     }
                 }
             }
-        })
+        }
 
         with(binding.rvTourism) {
             layoutManager = GridLayoutManager(context, 2)
