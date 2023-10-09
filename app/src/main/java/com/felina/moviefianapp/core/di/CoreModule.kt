@@ -16,6 +16,7 @@ import java.util.concurrent.TimeUnit
 import okhttp3.OkHttpClient
 import com.felina.moviefianapp.core.data.source.local.room.MovieDatabase
 
+
 val databaseModule = module {
     factory { get<MovieDatabase>().movieDao() }
     single {
@@ -50,6 +51,13 @@ val repositoryModule = module {
     single { RemoteDataSource(get()) }
     factory { AppExecutors() }
     single<IMovieRepository> {
+        MovieRepository(
+            get(),
+            get(),
+            get()
+        )
+    }
+    single {
         MovieRepository(
             get(),
             get(),

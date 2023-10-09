@@ -7,5 +7,5 @@ import kotlinx.coroutines.flow.Flow
 class LocalDataSource(private val movieDao: MovieDao) {
     fun getAllMovie(): Flow<List<MovieEntity>> = movieDao.getAllMovie()
     fun insertMovie(movieList: List<MovieEntity>) = movieDao.insertMovie(movieList)
-
+    fun deleteAllMovie() = movieDao.deleteAllMovie()
 }

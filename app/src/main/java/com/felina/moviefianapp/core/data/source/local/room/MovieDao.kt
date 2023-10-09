@@ -14,4 +14,6 @@ interface MovieDao {
     fun getAllMovie(): Flow<List<MovieEntity>>
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun insertMovie(movie: List<MovieEntity>)
+    @Query("DELETE FROM movie")
+    fun deleteAllMovie()
 }

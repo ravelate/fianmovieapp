@@ -1,5 +1,6 @@
 package com.felina.moviefianapp.core.data
 
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.map
 import com.felina.moviefianapp.core.data.source.local.LocalDataSource
@@ -10,6 +11,8 @@ import com.felina.moviefianapp.core.domain.model.Movie
 import com.felina.moviefianapp.core.domain.repository.IMovieRepository
 import com.felina.moviefianapp.core.utils.AppExecutors
 import com.felina.moviefianapp.core.utils.DataMapper
+import kotlinx.coroutines.Delay
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 
@@ -27,14 +30,16 @@ class MovieRepository(
                 }
             }
 
-            override fun shouldFetch(data: List<Movie>?): Boolean = data == null || data.isEmpty()
+            override fun shouldFetch(data: List<Movie>?) = true//Boolean = data == null || data.isEmpty()
 
             override suspend fun createCall(): Flow<ApiResponse<List<MovieResponse>>> =
                 remoteDataSource.getAllMovie()
 
             override suspend fun saveCallResult(data: List<MovieResponse>) {
                 val tourismList = DataMapper.mapResponsesToEntities(data)
+                Log.e("COba cOba", tourismList.toString())
                 appExecutors.diskIO().execute {
+                    localDataSource.deleteAllMovie()
                     localDataSource.insertMovie(tourismList)
                 }
             }
