@@ -7,7 +7,7 @@ import kotlinx.coroutines.flow.Flow
 
 interface IMovieRepository {
 
-    fun getAllMovie(): Flow<Resource<List<Movie>>>
+    fun getAllMovie(service: Boolean): Flow<Resource<List<Movie>>>
 
 
 }

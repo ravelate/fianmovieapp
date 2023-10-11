@@ -58,6 +58,7 @@ val repositoryModule = module {
         )
     }
     single {
+
         MovieRepository(
             get(),
             get(),

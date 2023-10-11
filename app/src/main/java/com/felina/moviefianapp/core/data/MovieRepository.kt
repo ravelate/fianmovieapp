@@ -22,7 +22,7 @@ class MovieRepository(
     private val appExecutors: AppExecutors
 ) : IMovieRepository {
 
-    override fun getAllMovie(): Flow<Resource<List<Movie>>> =
+    override fun getAllMovie(service: Boolean): Flow<Resource<List<Movie>>> =
         object : NetworkBoundResource<List<Movie>, List<MovieResponse>>() {
             override fun loadFromDB(): Flow<List<Movie>> {
                 return localDataSource.getAllMovie().map {
@@ -30,14 +30,13 @@ class MovieRepository(
                 }
             }
 
-            override fun shouldFetch(data: List<Movie>?) = true//Boolean = data == null || data.isEmpty()
+            override fun shouldFetch(data: List<Movie>?): Boolean = if (service)  data == null || data.isEmpty() else true
 
             override suspend fun createCall(): Flow<ApiResponse<List<MovieResponse>>> =
                 remoteDataSource.getAllMovie()
 
             override suspend fun saveCallResult(data: List<MovieResponse>) {
                 val tourismList = DataMapper.mapResponsesToEntities(data)
-                Log.e("COba cOba", tourismList.toString())
                 appExecutors.diskIO().execute {
                     localDataSource.deleteAllMovie()
                     localDataSource.insertMovie(tourismList)
